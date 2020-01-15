@@ -73,6 +73,15 @@ String(doctype(
 )) // <!DOCTYPE html><html><head><meta charset="utf-8"><title>Hello tagtag!</title></head><body><h1>Hello tagtag!</h1></body></html>
 ```
 
+## tag.html[tagName]
+This gives you shortcut to `tag(tagName)` for the standard HTML tag names.
+
+## tag.svg[tagName]
+This gives you shortcut to `tag(tagName)` for the standard SVG tag names.
+
+## Self-closing tags
+Self-closing tags are printed automatically.
+
 ## Escaping
 Notice tagtag escapes text content and attributes by default! If you want to print out raw text, please use:
 ```js
