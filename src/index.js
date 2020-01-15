@@ -6,15 +6,15 @@ export default function tag (query) {
   return function (...args) {
     const { tagName } = parseQuery(query);
     let { id, className } = parseQuery(query);
-    let attributes = '';
-    let content = '';
+    const attributes = [];
+    const content = [];
 
     args.forEach(arg => {
       if (isTextLike(arg)) {
-        content += arg;
+        content.push(arg); // escape!
       } else if (typeof arg === 'object') {
-        if (isTextLike(arg.el)) {
-          content += arg;
+        if (arg.toString) {
+          content.push(arg.toString());
         } else {
           for (const key in arg) {
             if (key === 'id') {
@@ -23,9 +23,9 @@ export default function tag (query) {
               if (className) {
                 className += ' ';
               }
-              className += arg[key];
+              className += arg[key]; // escape!
             } else {
-              attributes += ` ${key}="${arg[key]}"`;
+              attributes.push(` ${key}="${arg[key]}"`);
             }
           }
         }
@@ -33,23 +33,45 @@ export default function tag (query) {
     });
 
     if (id) {
-      attributes += ` id="${id}"`;
+      attributes.push(` id="${id}"`);
     }
 
     if (className) {
-      attributes += ` class="${className}"`;
+      attributes.push(` class="${className}"`);
     }
 
     if (tagName === 'doctype html') {
-      return `<!DOCTYPE html>${content}`;
+      return `<!DOCTYPE html>${content.join('')}`;
     }
 
     if (isHtmlVoidTag(tagName)) {
-      return `<${tagName}${attributes}>`;
+      return {
+        toString () {
+          return `<${tagName}${attributes.join('')}>`;
+        }
+      };
     } else if (isSvgVoidTag(tagName)) {
-      return `<${tagName}${attributes}/>`;
+      return {
+        toString () {
+          return `<${tagName}${attributes.join('')}/>`;
+        }
+      };
     } else {
-      return `<${tagName}${attributes}>${content}</${tagName}>`;
+      return {
+        toString () {
+          return `<${tagName}${attributes.join('')}>${content.join('')}</${tagName}>`;
+        }
+      };
     }
   };
 }
+
+tag.raw = function (str) {
+  return {
+    toString () { return str; }
+  };
+};
+
+console.log(
+  String(tag('h1')({ raw: '<script>Hello world!</script>' }))
+);
