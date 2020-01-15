@@ -1,5 +1,5 @@
 # tagtag
-Easy HTML templating with JS. Especially useful with Node.js (express template engine middleware coming soon!)
+Tagtag prints out HTML making it easy to do HTML templating with JS in Node.js (works in browsers as well). Express template engine middleware coming soon!
 
 # Install
 `npm i tagtag`
