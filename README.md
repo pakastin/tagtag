@@ -1,5 +1,5 @@
 # tagtag
-Easy HTML templating with JS. Especially useful with Node.js!
+Easy HTML templating with JS. Tagtag prints out HTML string, so it's especially useful with Node.js (works in browsers as well). Express template engine middleware coming soon!
 
 # Install
 `npm i tagtag`
@@ -17,7 +17,7 @@ const tag = require('tagtag');
 ```js
 tag('h1')('Hello world!'); // <h1>Hello world!</h1>
 tag('.hello')('world'); // <div class="hello">world</div>
-tag('#hello.world')('!'); // <div id="hello" class="world"></div>
+tag('#hello.world')('!'); // <div id="hello" class="world">!</div>
 ```
 
 ```js
