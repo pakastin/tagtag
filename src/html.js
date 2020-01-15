@@ -124,4 +124,10 @@ export default (tag) => [
     }
   });
   return html;
-}, {});
+}, {
+  doctype: {
+    get () {
+      return tag('doctype html');
+    }
+  }
+});
