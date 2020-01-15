@@ -17,7 +17,7 @@ const tag = require('tagtag');
 ```js
 tag('h1')('Hello world!'); // <h1>Hello world!</h1>
 tag('.hello')('world'); // <div class="hello">world</div>
-tag('#hello.world')('!'); // <div id="hello" class="world"></div>
+tag('#hello.world')('!'); // <div id="hello" class="world">!</div>
 ```
 
 ```js
