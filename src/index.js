@@ -13,10 +13,13 @@ class Element {
   }
 }
 
+const queryCache = {};
+
 export default function tag (query) {
+  query = (queryCache[query] ? queryCache[query] : (query = queryCache[query] = parseQuery(query)));
   return function (...args) {
-    const { tagName } = parseQuery(query);
-    let { id, className } = parseQuery(query);
+    const { tagName } = query;
+    let { id, className } = query;
     const attributes = [];
     const content = [];
 
@@ -70,3 +73,5 @@ export default function tag (query) {
 tag.raw = function (str) {
   return new Element(str);
 };
+
+tag.queryCache = queryCache;

@@ -5,11 +5,14 @@
   "main": "dist/tagtag.js",
   "module": "src/index.js",
   "scripts": {
-    "build": "rollup -f umd --name tagtag -c -i src/index.js -o dist/tagtag.js"
+    "build": "rollup -f umd --name tagtag -c -i src/index.js -o dist/tagtag.js",
+    "test": "mocha test.js"
   },
   "author": "Juha Lindstedt",
   "license": "MIT",
   "devDependencies": {
+    "benchmark": "^2.1.4",
+    "mocha": "^7.0.0",
     "rollup": "^1.29.0",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-terser": "^5.2.0"
