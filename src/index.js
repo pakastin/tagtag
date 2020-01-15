@@ -1,6 +1,17 @@
 import isTextLike from './is-text-like';
 import { isHtmlVoidTag, isSvgVoidTag } from './void-tags';
 import parseQuery from './parse-query';
+import escapeHTML from './escape-html';
+
+class Element {
+  constructor (output) {
+    this.output = output;
+  }
+
+  toString () {
+    return this.output;
+  }
+}
 
 const queryCache = {};
 
@@ -9,15 +20,15 @@ export default function tag (query) {
   return function (...args) {
     const { tagName } = query;
     let { id, className } = query;
-    let attributes = '';
-    let content = '';
+    const attributes = [];
+    const content = [];
 
     args.forEach(arg => {
       if (isTextLike(arg)) {
-        content += arg;
+        content.push(escapeHTML(arg));
       } else if (typeof arg === 'object') {
-        if (isTextLike(arg.el)) {
-          content += arg;
+        if (arg instanceof Element) {
+          content.push(arg.toString());
         } else {
           for (const key in arg) {
             if (key === 'id') {
@@ -26,9 +37,11 @@ export default function tag (query) {
               if (className) {
                 className += ' ';
               }
-              className += arg[key];
+              className += escapeHTML(arg[key]);
+            } else if (key === '$raw') {
+              content.push(arg[key]);
             } else {
-              attributes += ` ${key}="${arg[key]}"`;
+              attributes.push(` ${key}="${escapeHTML(arg[key])}"`);
             }
           }
         }
@@ -36,25 +49,29 @@ export default function tag (query) {
     });
 
     if (id) {
-      attributes += ` id="${id}"`;
+      attributes.push(` id="${id}"`);
     }
 
     if (className) {
-      attributes += ` class="${className}"`;
+      attributes.push(` class="${className}"`);
     }
 
     if (tagName === 'doctype html') {
-      return `<!DOCTYPE html>${content}`;
+      return `<!DOCTYPE html>${content.join('')}`;
     }
 
     if (isHtmlVoidTag(tagName)) {
-      return `<${tagName}${attributes}>`;
+      return new Element(`<${tagName}${attributes.join('')}>`);
     } else if (isSvgVoidTag(tagName)) {
-      return `<${tagName}${attributes}/>`;
+      return new Element(`<${tagName}${attributes.join('')}/>`);
     } else {
-      return `<${tagName}${attributes}>${content}</${tagName}>`;
+      return new Element(`<${tagName}${attributes.join('')}>${content.join('')}</${tagName}>`);
     }
   };
 }
+
+tag.raw = function (str) {
+  return new Element(str);
+};
 
 tag.queryCache = queryCache;
