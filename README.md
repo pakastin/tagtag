@@ -16,12 +16,7 @@ const tag = require('tagtag');
 
 ## Using with express
 ```js
-app.engine('js', require('tagtag/express'));
-app.set('views', 'views');
-app.set('view engine', 'js');
-```
-views/index.js
-```js
+// views/index.js
 const tag = require('tagtag');
 const h1 = tag('h1');
 
@@ -31,6 +26,14 @@ module.exports = ({ name }) => {
 ```
 
 ```js
+const express = require('express');
+
+const app = express();
+
+app.engine('js', require('tagtag/express'));
+app.set('views', 'views');
+app.set('view engine', 'js');
+
 app.get('/', (req, res, next) => {
   res.render('index', { name: 'tagtag' });
 });
