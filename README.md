@@ -1,5 +1,5 @@
 # tagtag
-Easy HTML templating with JS. Tagtag prints out HTML string, so it's especially useful with Node.js (works in browsers as well). Express template engine middleware coming soon!
+Easy HTML templating with JS. Tagtag prints out HTML string, so it's especially useful with Node.js (works in browsers as well).
 
 # Install
 `npm i tagtag`
@@ -13,6 +13,32 @@ import tag from 'tagtag'
 // If you're using CommonJS modules:
 const tag = require('tagtag');
 ```
+
+## Using with express
+```js
+// views/index.js
+const tag = require('tagtag');
+const h1 = tag('h1');
+
+module.exports = ({ name }) => {
+  return h1(`Hello ${name}`);
+});
+```
+
+```js
+const express = require('express');
+
+const app = express();
+
+app.engine('js', require('tagtag/express'));
+app.set('views', 'views');
+app.set('view engine', 'js');
+
+app.get('/', (req, res, next) => {
+  res.render('index', { name: 'tagtag' });
+});
+```
+
 ## tag(query)(...args)
 ```js
 tag('h1')('Hello world!').toString(); // <h1>Hello world!</h1>
@@ -40,4 +66,15 @@ String(doc(
     )
   )
 )) // <!DOCTYPE html><html><head><meta charset="utf-8"><title>Hello tagtag!</title></head><body><h1>Hello tagtag!</h1></body></html>
+```
+
+## Escaping
+Notice tagtag escapes text content and attributes by default! If you want to print out raw text, please use:
+```js
+String(body(tag.raw('<script alert("Evil!")</script>'));
+```
+
+or:
+```js
+String(body({ $raw: '<script alert("Evil!")</script>' }));
 ```
