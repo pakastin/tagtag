@@ -1,5 +1,5 @@
 # tagtag
-Easy HTML templating with JS
+Easy HTML templating with JS. Especially useful with Node.js!
 
 # Install
 `npm i tagtag`
