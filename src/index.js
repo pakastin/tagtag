@@ -1,6 +1,17 @@
 import isTextLike from './is-text-like';
 import { isHtmlVoidTag, isSvgVoidTag } from './void-tags';
 import parseQuery from './parse-query';
+import escapeHTML from './escape-html';
+
+class Element {
+  constructor (content) {
+    this.content = content;
+  }
+
+  toString () {
+    return this.content;
+  }
+}
 
 export default function tag (query) {
   return function (...args) {
@@ -11,9 +22,9 @@ export default function tag (query) {
 
     args.forEach(arg => {
       if (isTextLike(arg)) {
-        content.push(arg); // escape!
+        content.push(escapeHTML(arg));
       } else if (typeof arg === 'object') {
-        if (arg.toString) {
+        if (arg instanceof Element) {
           content.push(arg.toString());
         } else {
           for (const key in arg) {
@@ -23,9 +34,9 @@ export default function tag (query) {
               if (className) {
                 className += ' ';
               }
-              className += arg[key]; // escape!
+              className += escapeHTML(arg[key]);
             } else {
-              attributes.push(` ${key}="${arg[key]}"`);
+              attributes.push(` ${key}="${escapeHTML(arg[key])}"`);
             }
           }
         }
@@ -45,33 +56,19 @@ export default function tag (query) {
     }
 
     if (isHtmlVoidTag(tagName)) {
-      return {
-        toString () {
-          return `<${tagName}${attributes.join('')}>`;
-        }
-      };
+      return new Element(`<${tagName}${attributes.join('')}>`);
     } else if (isSvgVoidTag(tagName)) {
-      return {
-        toString () {
-          return `<${tagName}${attributes.join('')}/>`;
-        }
-      };
+      return new Element(`<${tagName}${attributes.join('')}/>`);
     } else {
-      return {
-        toString () {
-          return `<${tagName}${attributes.join('')}>${content.join('')}</${tagName}>`;
-        }
-      };
+      return new Element(`<${tagName}${attributes.join('')}>${content.join('')}</${tagName}>`);
     }
   };
 }
 
 tag.raw = function (str) {
-  return {
-    toString () { return str; }
-  };
+  return new Element(str);
 };
 
 console.log(
-  String(tag('h1')({ raw: '<script>Hello world!</script>' }))
+  String(tag('h1')({ test: '<script>evil</script>' }, '<script>evil</script>'))
 );
