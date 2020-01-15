@@ -13,22 +13,21 @@ import tag from 'tagtag'
 // If you're using CommonJS modules:
 const tag = require('tagtag');
 ```
-## tag(query, ...args)
+## tag(query)(...args)
 ```js
-tag('h1', 'Hello world!'); // <h1>Hello world!</h1>
-tag('.hello', 'world'); // <div class="hello">world</div>
-tag('#hello.world', '!'); // <div id="hello" class="world"></div>
+tag('h1')('Hello world!'); // <h1>Hello world!</h1>
+tag('.hello')('world'); // <div class="hello">world</div>
+tag('#hello.world')('!'); // <div id="hello" class="world"></div>
 ```
 
-## tag.extend(query)
 ```js
-const doc = tag.extend('doctype html');
-const html = tag.extend('html');
-const head = tag.extend('head');
-const meta = tag.extend('meta');
-const title = tag.extend('title');
-const body = tag.extend('body');
-const h1 = tag.extend('h1');
+const doc = tag('doctype html');
+const html = tag('html');
+const head = tag('head');
+const meta = tag('meta');
+const title = tag('title');
+const body = tag('body');
+const h1 = tag('h1');
 
 doc(
   html(
