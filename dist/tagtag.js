@@ -220,7 +220,13 @@
       }
     });
     return html;
-  }, {}); }
+  }, {
+    doctype: {
+      get: function get () {
+        return tag('doctype html');
+      }
+    }
+  }); }
 
   function svg (tag) { return [
     'a',
