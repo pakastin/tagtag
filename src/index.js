@@ -4,12 +4,12 @@ import parseQuery from './parse-query';
 import escapeHTML from './escape-html';
 
 class Element {
-  constructor (content) {
-    this.content = content;
+  constructor (output) {
+    this.output = output;
   }
 
   toString () {
-    return this.content;
+    return this.output;
   }
 }
 
@@ -35,6 +35,8 @@ export default function tag (query) {
                 className += ' ';
               }
               className += escapeHTML(arg[key]);
+            } else if (key === '$raw') {
+              content.push(arg[key]);
             } else {
               attributes.push(` ${key}="${escapeHTML(arg[key])}"`);
             }
@@ -68,7 +70,3 @@ export default function tag (query) {
 tag.raw = function (str) {
   return new Element(str);
 };
-
-console.log(
-  String(tag('h1')({ test: '<script>evil</script>' }, '<script>evil</script>'))
-);
