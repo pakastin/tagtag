@@ -17,15 +17,33 @@ const tag = require('tagtag');
 ## Using with express
 ```js
 // views/index.js
+
 const tag = require('tagtag');
+
+const doc = tag('doctype html');
+const html = tag('html');
+const head = tag('head');
+const meta = tag('meta');
+const title = tag('title');
+const body = tag('body');
 const h1 = tag('h1');
 
-module.exports = ({ name }) => {
-  return h1(`Hello ${name}`);
-});
+module.exports = ({ name }) => doc(
+  html(
+    head(
+      meta({ charset: 'utf-8' }),
+      title(`Hello ${name}`)
+    ),
+    body(
+      h1(`Hello ${name}`)
+    )
+  )
+);
 ```
 
 ```js
+// server.js
+
 const express = require('express');
 
 const app = express();
