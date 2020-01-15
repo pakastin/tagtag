@@ -80,7 +80,7 @@ This gives you shortcut to `tag(tagName)` for the standard HTML tag names.
 This gives you shortcut to `tag(tagName)` for the standard SVG tag names.
 
 ## Self-closing tags
-Self-closing tags are printed automatically.
+Self-closing tags are detected automatically.
 
 ## Escaping
 Notice tagtag escapes text content and attributes by default! If you want to print out raw text, please use:
