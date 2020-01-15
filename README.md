@@ -19,16 +19,9 @@ const tag = require('tagtag');
 // views/index.js
 
 const tag = require('tagtag');
+const { doctype, html, head, meta, title, body, h1 } = tag.html;
 
-const doc = tag('doctype html');
-const html = tag('html');
-const head = tag('head');
-const meta = tag('meta');
-const title = tag('title');
-const body = tag('body');
-const h1 = tag('h1');
-
-module.exports = ({ name }) => doc(
+module.exports = ({ name }) => doctype(
   html(
     head(
       meta({ charset: 'utf-8' }),
@@ -65,15 +58,9 @@ String(tag('#hello.world')('!')); // <div id="hello" class="world">!</div>
 ```
 
 ```js
-const doc = tag('doctype html');
-const html = tag('html');
-const head = tag('head');
-const meta = tag('meta');
-const title = tag('title');
-const body = tag('body');
-const h1 = tag('h1');
+const { doctype, html, head, meta, title, body, h1 } = tag.html;
 
-String(doc(
+String(doctype(
   html(
     head(
       meta({ charset: 'utf-8' }),
