@@ -41,3 +41,14 @@ String(doc(
   )
 )) // <!DOCTYPE html><html><head><meta charset="utf-8"><title>Hello tagtag!</title></head><body><h1>Hello tagtag!</h1></body></html>
 ```
+
+## Escaping
+Notice tagtag escapes text content and attributes by default! If you want to print out raw text, please use:
+```js
+String(body(tag.raw('<script alert("Evil!")</script>'));
+```
+
+or:
+```js
+String(body({ $raw: '<script alert("Evil!")</script>' }));
+```
