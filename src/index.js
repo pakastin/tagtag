@@ -2,8 +2,10 @@ import isTextLike from './is-text-like';
 import { isHtmlVoidTag, isSvgVoidTag } from './void-tags';
 import parseQuery from './parse-query';
 
+const queryCache = {};
+
 export default function tag (query) {
-  query = parseQuery(query);
+  query = (queryCache[query] ? queryCache[query] : (query = queryCache[query] = parseQuery(query)));
   return function (...args) {
     const { tagName } = query;
     let { id, className } = query;
@@ -54,3 +56,5 @@ export default function tag (query) {
     }
   };
 }
+
+tag.queryCache = queryCache;
