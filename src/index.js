@@ -2,6 +2,8 @@ import isTextLike from './is-text-like';
 import { isHtmlVoidTag, isSvgVoidTag } from './void-tags';
 import parseQuery from './parse-query';
 import escapeHTML from './escape-html';
+import html from './html';
+import svg from './svg';
 
 class Element {
   constructor (output) {
@@ -73,5 +75,8 @@ export default function tag (query) {
 tag.raw = function (str) {
   return new Element(str);
 };
+
+tag.html = html(tag);
+tag.svg = svg(tag);
 
 tag.queryCache = queryCache;
