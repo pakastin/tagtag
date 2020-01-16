@@ -1,14 +1,14 @@
-export default function parseQuery(query) {
+export default function parseQuery (query) {
   const chunks = query.split(/([#.])/);
-  let tagName = "";
-  let id = "";
-  let classNames = [];
+  let tagName = '';
+  let id = '';
+  const classNames = [];
 
   for (var i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
-    if (chunk === "#") {
+    if (chunk === '#') {
       id = chunks[++i];
-    } else if (chunk === ".") {
+    } else if (chunk === '.') {
       classNames.push(chunks[++i]);
     } else if (chunk.length) {
       tagName = chunk;
@@ -16,8 +16,8 @@ export default function parseQuery(query) {
   }
 
   return {
-    tagName: tagName || "div",
+    tagName: tagName || 'div',
     id,
-    className: classNames.join(" ")
+    className: classNames.join(' ')
   };
 }
