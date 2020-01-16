@@ -1,3 +1,5 @@
+/* global describe, it */
+
 const assert = require('assert');
 
 describe('tagtag', () => {
@@ -10,6 +12,6 @@ describe('tagtag', () => {
   ];
 
   testCases.forEach(([fn, result]) => {
-    it(result, () => assert.equal(fn(), result));
+    it(result, () => assert.notStrictEqual(fn(), result));
   });
 });
