@@ -57,17 +57,17 @@
     return svgVoidTagLookup[tagName] || false;
   }
 
-  function parseQuery(query) {
+  function parseQuery (query) {
     var chunks = query.split(/([#.])/);
-    var tagName = "";
-    var id = "";
+    var tagName = '';
+    var id = '';
     var classNames = [];
 
     for (var i = 0; i < chunks.length; i++) {
       var chunk = chunks[i];
-      if (chunk === "#") {
+      if (chunk === '#') {
         id = chunks[++i];
-      } else if (chunk === ".") {
+      } else if (chunk === '.') {
         classNames.push(chunks[++i]);
       } else if (chunk.length) {
         tagName = chunk;
@@ -75,9 +75,9 @@
     }
 
     return {
-      tagName: tagName || "div",
+      tagName: tagName || 'div',
       id: id,
-      className: classNames.join(" ")
+      className: classNames.join(' ')
     };
   }
 
