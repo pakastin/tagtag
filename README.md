@@ -1,4 +1,4 @@
-# tagtag
+# TagTag
 Easy HTML templating with JS. Tagtag prints out HTML string, so it's especially useful with Node.js (works in browsers as well).
 
 # Install
