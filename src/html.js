@@ -125,9 +125,7 @@ export default (tag) => [
   });
   return html;
 }, {
-  doctype: {
-    get () {
-      return tag('doctype html');
-    }
+  get doctype () {
+    return tag('doctype html');
   }
 });
