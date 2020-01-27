@@ -221,11 +221,7 @@
     });
     return html;
   }, {
-    doctype: {
-      get: function get () {
-        return tag('doctype html');
-      }
-    }
+    doctype: tag('doctype html')
   }); }
 
   function svg (tag) { return [
