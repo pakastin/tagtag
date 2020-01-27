@@ -1,6 +1,6 @@
 {
   "name": "tagtag",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Easy HTML templating with JS",
   "main": "dist/tagtag.js",
   "module": "src/index.js",
